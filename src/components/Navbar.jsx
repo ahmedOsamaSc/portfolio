@@ -46,7 +46,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-2">
           <a
-            href="https://wa.me/01124912367"
+            href="https://wa.me/201124912367"
             target="_blank"
             rel="noreferrer"
             className="text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-green-500"

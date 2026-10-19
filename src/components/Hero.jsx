@@ -13,12 +13,13 @@ const Hero = () => {
             </p>
 
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              Front-End Developer
+              Ahmed Osama
+              <span className="block text-primary">Front-End Developer</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-              I build modern, responsive, and user-friendly web applications
-              using React and modern web technologies.
+              I build modern and responsive web interfaces using React,
+              JavaScript, Tailwind CSS, and modern front-end tools.
             </p>
 
             {/* Buttons */}
@@ -76,7 +77,7 @@ const Hero = () => {
           >
             <div className="relative h-64 w-64 overflow-hidden rounded-full border-4 border-primary/20 shadow-xl sm:h-80 sm:w-80">
               <img
-                src="/profile.jpg"
+                src={`${import.meta.env.BASE_URL}profile.jpg`}
                 alt="Ahmed Osama"
                 className="h-full w-full object-cover"
               />

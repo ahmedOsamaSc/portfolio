@@ -12,37 +12,43 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const NewError = {};
+
+    const newError = {};
+
     if (!name.trim()) {
-      NewError.name = "Name is required";
+      newError.name = "Name is required";
     }
+
     if (!email.trim()) {
-      NewError.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      NewError.email = "plase enter a valid email";
+      newError.email = "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      newError.email = "Please enter a valid email";
     }
+
     if (!message.trim()) {
-      NewError.message = "Message is required";
+      newError.message = "Message is required";
     }
-    if (Object.keys(NewError).length > 0) {
-      setError(NewError);
+
+    if (Object.keys(newError).length > 0) {
+      setError(newError);
+      setSuccess("");
       return;
     }
 
-    const FormData = {
+    const templateParams = {
       name,
       email,
       message,
     };
-    // console.log(FormData);
-    const templateParams = {
-      name: FormData.name,
-      email: FormData.email,
-      message: FormData.message,
-    };
-    // console.log(templateParams);
+
+    setIsLoading(true);
+    setSuccess("");
+    setError({});
+
     try {
       await emailjs.send(
         "service_skqht23",
@@ -51,16 +57,22 @@ const Contact = () => {
         "uMolHjSu78CZl9W7x",
       );
 
-      console.log("Email sent successfully");
+      setSuccess("Your message has been sent successfully!");
+      setName("");
+      setEmail("");
+      setMessage("");
+      setError({});
     } catch (error) {
       console.error("Error sending email:", error);
-    }
 
-    setSuccess("your Message has been sent successfully!");
-    setName("");
-    setEmail("");
-    setMessage("");
+      setError({
+        submit: "Failed to send your message. Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <section className="py-24">
       <div className="mx-auto w-full max-w-6xl px-6">
@@ -117,9 +129,9 @@ const Contact = () => {
               type="text"
               placeholder="Enter your name"
               value={name}
-              // onChange={(e) => setName(e.target.value)}
               onChange={(e) => {
                 setName(e.target.value);
+
                 if (error.name) {
                   setError((prev) => ({
                     ...prev,
@@ -128,6 +140,7 @@ const Contact = () => {
                 }
               }}
             />
+
             {error.name && <p className="text-red-500">{error.name}</p>}
           </motion.div>
 
@@ -141,14 +154,15 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
           >
             <Label htmlFor="email">Email</Label>
+
             <Input
               id="email"
               type="email"
               placeholder="Enter your email"
               value={email}
-              // onChange={(e) => setEmail(e.target.value)}
               onChange={(e) => {
                 setEmail(e.target.value);
+
                 if (error.email) {
                   setError((prev) => ({
                     ...prev,
@@ -157,6 +171,7 @@ const Contact = () => {
                 }
               }}
             />
+
             {error.email && <p className="text-red-500">{error.email}</p>}
           </motion.div>
 
@@ -170,13 +185,14 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
           >
             <Label htmlFor="message">Message</Label>
+
             <Textarea
               id="message"
               placeholder="Write your message..."
               value={message}
-              // onChange={(e) => setMessage(e.target.value)}
               onChange={(e) => {
                 setMessage(e.target.value);
+
                 if (error.message) {
                   setError((prev) => ({
                     ...prev,
@@ -185,13 +201,11 @@ const Contact = () => {
                 }
               }}
             />
+
             {error.message && <p className="text-red-500">{error.message}</p>}
           </motion.div>
 
-          {/* Button */}
-          {/* <Button type="submit" className="w-full">
-            Send Message
-          </Button> */}
+          {/* Submit Button */}
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 20 },
@@ -199,12 +213,20 @@ const Contact = () => {
             }}
             transition={{ duration: 0.5 }}
           >
-            <Button type="submit" className="w-full">
-              Send Message
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Sending..." : "Send Message"}
             </Button>
           </motion.div>
         </motion.form>
-        {success && <p className="mt-4 text-muted-foreground">{success}</p>}
+
+        {/* Success & Submit Error */}
+        {error.submit && (
+          <p className="mt-4 text-center text-red-500">{error.submit}</p>
+        )}
+
+        {success && (
+          <p className="mt-4 text-center text-muted-foreground">{success}</p>
+        )}
       </div>
     </section>
   );

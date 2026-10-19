@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Ahmed Osama All rights reserved.
+            © {new Date().getFullYear()} Ahmed Osama. All rights reserved.
           </p>
 
           {/* Links */}
@@ -21,6 +21,8 @@ const Footer = () => {
 
             <a
               href="https://www.linkedin.com/in/ahmed-osamaa-8709773a6"
+              target="_blank"
+              rel="noreferrer"
               className="text-sm text-muted-foreground transition hover:text-foreground"
             >
               LinkedIn

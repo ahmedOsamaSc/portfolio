@@ -7,31 +7,36 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 
-export const Router = createBrowserRouter([
+export const Router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          index: true,
+          element: <Hero />,
+        },
+        {
+          path: "about",
+          element: <About />,
+        },
+        {
+          path: "skills",
+          element: <Skills />,
+        },
+        {
+          path: "projects",
+          element: <Projects />,
+        },
+        {
+          path: "contact",
+          element: <Contact />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <Hero />,
-      },
-      {
-        path: "about",
-        element: <About />,
-      },
-      {
-        path: "skills",
-        element: <Skills />,
-      },
-      {
-        path: "projects",
-        element: <Projects />,
-      },
-      {
-        path: "contact",
-        element: <Contact />,
-      },
-    ],
+    basename: "/portfolio",
   },
-]);
+);

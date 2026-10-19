@@ -1,3 +1,5 @@
+import { motion } from "motion/react";
+
 // const skills = [
 //   {
 //     name: "HTML",
@@ -24,54 +26,6 @@
 //     description: "Managing projects and version control.",
 //   },
 // ];
-
-// const Skills = () => {
-//   return (
-//     <section className="py-24">
-//       <div className="mx-auto w-full max-w-6xl px-6">
-
-//         {/* Heading */}
-//         <div className="mx-auto max-w-2xl text-center">
-//           <p className="text-sm font-semibold uppercase tracking-widest text-primary">
-//             My Skills
-//           </p>
-
-//           <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-//             Technologies I Work With
-//           </h2>
-
-//           <p className="mt-4 text-muted-foreground">
-//             These are some of the technologies and tools I use to build
-//             modern and responsive web applications.
-//           </p>
-//         </div>
-
-//         {/* Skills */}
-//         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-//           {skills.map((skill) => (
-//             <div
-//               key={skill.name}
-//               className="rounded-xl border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-//             >
-//               <h3 className="text-lg font-semibold">
-//                 {skill.name}
-//               </h3>
-
-//               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-//                 {skill.description}
-//               </p>
-//             </div>
-//           ))}
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Skills;
-import { motion } from "motion/react";
-
 const skills = [
   {
     name: "HTML",
@@ -90,15 +44,36 @@ const skills = [
     description: "Building reusable components and modern interfaces.",
   },
   {
+    name: "Next.js",
+    description:
+      "Building React applications with file-based routing and server-side rendering.",
+  },
+  {
     name: "Tailwind CSS",
     description: "Creating responsive interfaces with utility classes.",
+  },
+  {
+    name: "React Router",
+    description: "Managing navigation and routes in React applications.",
+  },
+  {
+    name: "Zustand",
+    description: "Managing shared application state with a lightweight store.",
+  },
+  {
+    name: "TanStack Query",
+    description: "Fetching, caching, and managing server data.",
+  },
+  {
+    name: "shadcn/ui",
+    description:
+      "Building customizable user interfaces with reusable components.",
   },
   {
     name: "Git & GitHub",
     description: "Managing projects and version control.",
   },
 ];
-
 const Skills = () => {
   return (
     <section className="py-24">
