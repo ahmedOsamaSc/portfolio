@@ -37,6 +37,6 @@ export const Router = createBrowserRouter(
     },
   ],
   {
-    basename: "/portfolio",
+    basename: "/",
   },
 );
