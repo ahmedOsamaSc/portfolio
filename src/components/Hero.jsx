@@ -23,20 +23,21 @@ const Hero = () => {
             </p>
 
             {/* Buttons */}
+
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                to="/projects"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground  transition-all duration-300 hover:-translate-y-1 hover:bg-primary/90 hover:shadow-lg"
+              <a
+                href="#projects"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-all duration-300 hover:-translate-y-1 hover:bg-primary/90 hover:shadow-lg"
               >
                 View My Projects
-              </Link>
+              </a>
 
-              <Link
-                to="/contact"
+              <a
+                href="#contact"
                 className="inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-6 text-sm font-medium transition-all duration-300 hover:-translate-y-1 hover:bg-accent hover:text-accent-foreground hover:shadow-md"
               >
                 Contact Me
-              </Link>
+              </a>
             </div>
 
             {/* Social Links */}
