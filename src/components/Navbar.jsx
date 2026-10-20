@@ -1,49 +1,82 @@
-// export default Navbar;
-import { Link, NavLink } from "react-router";
-import { useThemeStore } from "../Store/useThemeStore";
-import { Button } from "./ui/button";
 import { useState } from "react";
+import { Link } from "react-router";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { FaWhatsapp, FaInstagram } from "react-icons/fa";
+
+import { useThemeStore } from "../Store/useThemeStore";
+import { Button } from "./ui/button";
+
 const Navbar = () => {
+  // 1. التحكم في الثيم
   const { theme, toggleTheme } = useThemeStore();
+
+  // 2. التحكم في قائمة الموبايل
   const [isOpen, setIsOpen] = useState(false);
-  const navLinkClass = ({ isActive }) =>
-    `text-sm font-medium transition-all duration-300 ${
-      isActive
-        ? "text-primary"
-        : "text-muted-foreground hover:text-primary hover:-translate-y-0.5"
-    }`;
+
+  // 3. روابط أقسام الصفحة
+  const navLinks = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact", href: "#contact" },
+  ];
+
+  // 4. التنسيق المشترك للروابط
+  const linkClass =
+    "text-sm font-medium text-muted-foreground transition-all duration-300 hover:text-primary hover:-translate-y-0.5";
+
+  // 5. دالة التنقل السلس بين الأقسام
+
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+
+    const section = document.querySelector(href);
+
+    if (!section) return;
+
+    const navbarHeight = 64;
+
+    const sectionPosition =
+      section.getBoundingClientRect().top + window.scrollY;
+
+    window.history.replaceState(null, "", href);
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    setIsOpen(false);
+  };
+
   return (
     <header className="fixed top-0 right-0 left-0 z-50 border-b bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
         {/* Logo */}
-        <Link to="/" className="text-xl font-bold tracking-tight">
+        <a
+          href="#home"
+          className="text-xl font-bold tracking-tight"
+          onClick={(e) => handleNavClick(e, "#home")}
+        >
           Ahmed Osama
-        </Link>
+        </a>
 
-        {/* Links */}
+        {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 md:flex">
-          <NavLink to="/" className={navLinkClass}>
-            Home
-          </NavLink>
-
-          <NavLink to="/about" className={navLinkClass}>
-            About
-          </NavLink>
-
-          <NavLink to="/skills" className={navLinkClass}>
-            Skills
-          </NavLink>
-
-          <NavLink to="/projects" className={navLinkClass}>
-            Projects
-          </NavLink>
-
-          <NavLink to="/contact" className={navLinkClass}>
-            Contact
-          </NavLink>
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={linkClass}
+              onClick={(e) => handleNavClick(e, link.href)}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
+
+        {/* Social Links and Controls */}
         <div className="flex items-center gap-2">
           <a
             href="https://wa.me/201124912367"
@@ -64,66 +97,46 @@ const Navbar = () => {
           >
             <FaInstagram size={20} />
           </a>
+
+          {/* Dark Mode */}
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
             className="transition-all duration-300 hover:scale-110"
+            aria-label="Toggle theme"
           >
             {theme === "dark" ? <Sun /> : <Moon />}
           </Button>
+
+          {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden transition-all duration-300 hover:scale-110 "
+            className="transition-all duration-300 hover:scale-110 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
           >
             {isOpen ? <X /> : <Menu />}
           </Button>
         </div>
       </nav>
+
+      {/* Mobile Navigation */}
       {isOpen && (
         <div className="border-t bg-background p-4 md:hidden">
           <div className="flex flex-col gap-4">
-            <NavLink
-              to="/"
-              className={navLinkClass}
-              onClick={() => setIsOpen(false)}
-            >
-              Home
-            </NavLink>
-
-            <NavLink
-              to="/about"
-              className={navLinkClass}
-              onClick={() => setIsOpen(false)}
-            >
-              About
-            </NavLink>
-
-            <NavLink
-              to="/skills"
-              className={navLinkClass}
-              onClick={() => setIsOpen(false)}
-            >
-              Skills
-            </NavLink>
-
-            <NavLink
-              to="/projects"
-              className={navLinkClass}
-              onClick={() => setIsOpen(false)}
-            >
-              Projects
-            </NavLink>
-
-            <NavLink
-              to="/contact"
-              className={navLinkClass}
-              onClick={() => setIsOpen(false)}
-            >
-              Contact
-            </NavLink>
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={linkClass}
+                onClick={(e) => handleNavClick(e, link.href)}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       )}
